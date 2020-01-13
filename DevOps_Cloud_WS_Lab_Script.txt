@@ -1,0 +1,107 @@
+# install git
+sudo apt-get install git
+<!-- apk add --no-cache git -->
+git clone https://github.com/stamilse/get-started-python.git
+cd get-starte-python
+git checkout master
+git pull
+python hello.py
+# should fail
+# need to install dependencies, so lets install in a seperate environment
+conda create -n wc python=3.6  
+conda activate wc
+pip install -r requirements.txt
+python hello.py
+
+# Milestone 1: running locally
+
+# See if it is accessible from other person's laptops? How would you do it?
+
+
+# Can we deploy it to cloud.
+
+# go to IBM Cloud https://cloud.ibm.com/ and login	
+<!--go to manage>accounts>org>space: Location/Region-->
+# now we will do that from your terminal
+cf -v
+<!--install CloudFoundry if you don't already have it-->
+<!-- take time to install. isntall before the lunch session itself -->
+cf login -a "https://api.ng.bluemix.net"
+cf login -a "https://api.eu-gb.bluemix.net"
+cf login -a https://api.au-syd.bluemix.net
+cf login -a https://api.eu-de.bluemix.net
+<!--use the login-id that was used in creating ibm account -->
+cf target
+cf apps
+
+#edit manifest.yml file, change name
+open manifest.yml
+<!--change name to something unique. see the "random-route: true" thing.  -->
+cf push -f manifest.yml
+cf apps
+cf logs $APP_NAME
+
+# now go and check on the url and see if you are able to access it ?
+
+
+# Milestone 2: running on cloud
+
+Fork the git repo
+
+cd ..
+mkdir my_ws_repo
+cd my_ws_repo
+git clone $YOUR_REPO_LINK
+cd get-started-python
+git checkout develop 
+<!--should fail -->
+git checkout -b develop
+git push
+git pull
+git checkout -b feature/greet_all
+# make some changes to the code. Greet all the people previously seen and not just the last guy. Tejas.
+# keep one branch with solution
+
+git add ALL_CHANGED_FILE
+git commit -m "now greeting all"
+git push
+
+# go to travis-ci.com, sign in with github
+# enable your repo for running travis on travis-ci.com
+# trigger build 
+
+# see if you got a slack or email notification ? How?
+<!-- hack: mv .travis1.yml .travis.yml -->
+# edit the `notification` part with your email address
+git add
+git commit 
+git push
+
+# get slack integration config: https://my.slack.com/services/new/travis
+<!-- hack: mv .travis2.yml .travis.yml -->
+
+# test:
+# locally running tests, py.test
+py.test
+# same in travis
+# build pass/fail.
+
+# auto deploy from travis. # will fail first
+<!-- mv .travis3.yml .travis.yml -->
+
+git add
+git commit
+git push
+
+
+# raise Pull Requests from github feature->develop. Check its travis status. Merge from UI.
+## it will fail.
+## Create apikey from IBM cloud
+## add keys in settings in travis, and configure travis to use the keys.
+
+# docker 
+
+docker build -t iisc-python .
+docker run -p 8000:8000 iisc-python
+
+### think how can we make docker image get deployed using kubernetes
